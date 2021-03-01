@@ -24,4 +24,17 @@ This project will create a TinyTX4 using:
 
 And release all hardware and software in this repository.
 
-Stay tuned for updates!
+## Radio module choice
+
+Here is a comparison of [RFM69](https://www.hoperf.com/modules/rf_transceiver/index.html) variants:
+  
+Variant|Output (dBm)|Pinout|Size (mm)
+---|---|---|---
+RFM69[**W**](https://www.hoperf.com/modules/rf_transceiver/RFM69W.html)|13|RFM69W|19.7 x 16
+RFM69[**CW**](https://www.hoperf.com/modules/rf_transceiver/RFM69C.html)|13|RFM69CW|16 x 16
+RFM69[**HW**](https://www.hoperf.com/%20modules/rf_transceiver/RFM69HW.html)|20|RFM69W|19.7 x 16
+RFM69[**HCW**](https://www.hoperf.com/modules/rf_transceiver/RFM69HCW.html)|20|RFM69HCW|16 x 16
+
+i.e. RFM69W and RFM69HW share pinout, but are larger (19.7 x 16)mm vs the RFMCW and RFMHCW (16 x 16)mm.
+
+For interoperability between normal and high-power modules, we'll go with the **RFM69(H)W** modules.
