@@ -14,8 +14,14 @@ Since Nathan created TinyTX, both chips have evolved:
 
 And the radio module libraries have evolved.
 
+## High level design
+
 This project will create a TinyTX4 using:
 
 1. RFM69
 2. ATtiny1614
 3. lowpowerlab's [RFM69](https://github.com/lowpowerlab/rfm69) library
+
+And release all hardware and software in this repository.
+
+Stay tuned for updates!
