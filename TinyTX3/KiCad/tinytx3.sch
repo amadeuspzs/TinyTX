@@ -1,0 +1,519 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Wire Wire Line
+	5800 3000 5800 4200
+Wire Wire Line
+	5800 4200 5500 4200
+Wire Wire Line
+	5900 3000 5900 4100
+Wire Wire Line
+	5900 4100 5500 4100
+Wire Wire Line
+	5700 3000 5700 4300
+Wire Wire Line
+	5700 4300 5500 4300
+Wire Wire Line
+	5600 3000 5600 3700
+Wire Wire Line
+	5600 3700 5500 3700
+Wire Wire Line
+	6100 3000 6100 3600
+Wire Wire Line
+	6100 3600 5500 3600
+Wire Wire Line
+	6000 1900 6000 2000
+Wire Wire Line
+	8200 4800 7600 4800
+Wire Wire Line
+	7600 4800 7000 4800
+Wire Wire Line
+	7600 3700 7600 4800
+Connection ~ 7600 4800
+Text Label 8200 4800 0    10   ~ 0
+GND
+Wire Wire Line
+	3200 4800 3200 4700
+Wire Wire Line
+	3200 4600 3200 4700
+Connection ~ 3200 4700
+Text Label 3200 4800 0    10   ~ 0
+GND
+Wire Wire Line
+	4000 2700 4400 2700
+Wire Wire Line
+	4400 2700 4400 2800
+Text Label 4000 2700 0    10   ~ 0
+GND
+Wire Wire Line
+	8200 4500 7000 4500
+Wire Wire Line
+	7000 4500 5500 4500
+Wire Wire Line
+	7000 3700 7000 4500
+Connection ~ 7000 4500
+Wire Wire Line
+	5500 4400 6800 4400
+Wire Wire Line
+	6800 4400 8200 4400
+Wire Wire Line
+	6800 3700 6800 4400
+Connection ~ 6800 4400
+Wire Wire Line
+	5500 4700 7400 4700
+Wire Wire Line
+	7400 4700 8200 4700
+Wire Wire Line
+	7400 3700 7400 4700
+Connection ~ 7400 4700
+Wire Wire Line
+	5500 4600 7200 4600
+Wire Wire Line
+	7200 4600 8200 4600
+Wire Wire Line
+	7200 3700 7200 4600
+Connection ~ 7200 4600
+Wire Wire Line
+	5200 2500 5300 2500
+Connection ~ 5200 2500
+Text Label 5200 2500 0    10   ~ 0
+VCC
+Wire Wire Line
+	4000 2400 4400 2400
+Wire Wire Line
+	4400 2400 4400 2300
+Text Label 4000 2400 0    10   ~ 0
+VCC
+Wire Wire Line
+	3200 4100 3200 4200
+Wire Wire Line
+	3200 4200 3200 4300
+Connection ~ 3200 4200
+Text Label 3200 4100 0    10   ~ 0
+VCC
+Wire Wire Line
+	8200 4900 7800 4900
+Wire Wire Line
+	7800 4900 7600 4900
+Wire Wire Line
+	7800 3700 7800 4900
+Connection ~ 7800 4900
+Text Label 8200 4900 0    10   ~ 0
+VCC
+Wire Wire Line
+	5500 4000 6100 4000
+Wire Wire Line
+	6100 4000 6100 4300
+Wire Wire Line
+	6100 4300 6600 4300
+Wire Wire Line
+	6600 4300 8200 4300
+Wire Wire Line
+	6600 3700 6600 4300
+Connection ~ 6600 4300
+Wire Wire Line
+	5500 3800 6200 3800
+Wire Wire Line
+	6200 3800 6200 4200
+Wire Wire Line
+	6200 4200 6400 4200
+Wire Wire Line
+	6400 4200 8200 4200
+Wire Wire Line
+	6400 3700 6400 4200
+Connection ~ 6400 4200
+$Comp
+L tinytx3-eagle-import:RFM12B U$1
+U 1 1 4D826FCC
+P 5800 2500
+F 0 "U$1" H 5800 2500 50  0001 C CNN
+F 1 "RFM12B" H 5800 2500 50  0001 C CNN
+F 2 "tinytx3:RFM12B" H 5800 2500 50  0001 C CNN
+F 3 "" H 5800 2500 50  0001 C CNN
+	1    5800 2500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:TINY24_44_84-PU IC1
+U 1 1 A06A83DB
+P 3500 4100
+F 0 "IC1" H 3400 4830 59  0000 L BNN
+F 1 "ATTINY84A-PU" H 3400 3300 59  0000 L BNN
+F 2 "tinytx3:DIL14" H 3500 4100 50  0001 C CNN
+F 3 "" H 3500 4100 50  0001 C CNN
+	1    3500 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,8 ANT1
+U 1 1 19C2D6AC
+P 6000 1800
+F 0 "ANT1" H 5955 1873 59  0000 L BNN
+F 1 "1,6_0,8" H 5955 1670 59  0000 L BNN
+F 2 "tinytx3:1,6_0,8" H 6000 1800 50  0001 C CNN
+F 3 "" H 6000 1800 50  0001 C CNN
+	1    6000 1800
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:VCC #P+01
+U 1 1 48DD0DF0
+P 7500 4900
+F 0 "#P+01" H 7500 4900 50  0001 C CNN
+F 1 "VCC" V 7400 4800 59  0000 L BNN
+F 2 "" H 7500 4900 50  0001 C CNN
+F 3 "" H 7500 4900 50  0001 C CNN
+	1    7500 4900
+	0    -1   -1   0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:GND #GND01
+U 1 1 A7315E89
+P 7000 4900
+F 0 "#GND01" H 7000 4900 50  0001 C CNN
+F 1 "GND" H 6900 4800 59  0000 L BNN
+F 2 "" H 7000 4900 50  0001 C CNN
+F 3 "" H 7000 4900 50  0001 C CNN
+	1    7000 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:GND #GND03
+U 1 1 E2B99DEF
+P 6400 2600
+F 0 "#GND03" H 6400 2600 50  0001 C CNN
+F 1 "GND" H 6300 2500 59  0000 L BNN
+F 2 "" H 6400 2600 50  0001 C CNN
+F 3 "" H 6400 2600 50  0001 C CNN
+	1    6400 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:VCC #P+02
+U 1 1 534F544F
+P 5200 2400
+F 0 "#P+02" H 5200 2400 50  0001 C CNN
+F 1 "VCC" V 5100 2300 59  0000 L BNN
+F 2 "" H 5200 2400 50  0001 C CNN
+F 3 "" H 5200 2400 50  0001 C CNN
+	1    5200 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:VCC #P+03
+U 1 1 4F0D6BCD
+P 4400 2200
+F 0 "#P+03" H 4400 2200 50  0001 C CNN
+F 1 "VCC" V 4300 2100 59  0000 L BNN
+F 2 "" H 4400 2200 50  0001 C CNN
+F 3 "" H 4400 2200 50  0001 C CNN
+	1    4400 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:GND #GND02
+U 1 1 C92C8F3B
+P 4400 2900
+F 0 "#GND02" H 4400 2900 50  0001 C CNN
+F 1 "GND" H 4300 2800 59  0000 L BNN
+F 2 "" H 4400 2900 50  0001 C CNN
+F 3 "" H 4400 2900 50  0001 C CNN
+	1    4400 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:GND #GND04
+U 1 1 6AE2E73F
+P 3200 4900
+F 0 "#GND04" H 3200 4900 50  0001 C CNN
+F 1 "GND" H 3100 4800 59  0000 L BNN
+F 2 "" H 3200 4900 50  0001 C CNN
+F 3 "" H 3200 4900 50  0001 C CNN
+	1    3200 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:VCC #P+04
+U 1 1 40DCAEBA
+P 3200 4000
+F 0 "#P+04" H 3200 4000 50  0001 C CNN
+F 1 "VCC" V 3100 3900 59  0000 L BNN
+F 2 "" H 3200 4000 50  0001 C CNN
+F 3 "" H 3200 4000 50  0001 C CNN
+	1    3200 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:C-EU025-025X050 C1
+U 1 1 AF39FBAA
+P 5200 2600
+F 0 "C1" H 5260 2615 59  0000 L BNN
+F 1 "C1" H 5260 2415 59  0000 L BNN
+F 2 "tinytx3:C025-025X050" H 5200 2600 50  0001 C CNN
+F 3 "" H 5200 2600 50  0001 C CNN
+	1    5200 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:C-EU025-025X050 C2
+U 1 1 6C57DCE5
+P 3200 4400
+F 0 "C2" H 3260 4415 59  0000 L BNN
+F 1 "C2" H 3260 4215 59  0000 L BNN
+F 2 "tinytx3:C025-025X050" H 3200 4400 50  0001 C CNN
+F 3 "" H 3200 4400 50  0001 C CNN
+	1    3200 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:GND #GND05
+U 1 1 6CC61BFB
+P 5200 2900
+F 0 "#GND05" H 5200 2900 50  0001 C CNN
+F 1 "GND" H 5100 2800 59  0000 L BNN
+F 2 "" H 5200 2900 50  0001 C CNN
+F 3 "" H 5200 2900 50  0001 C CNN
+	1    5200 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:PINHD-1X8 SV1
+U 1 1 6F54BB83
+P 8300 4600
+F 0 "SV1" H 8050 5125 59  0000 L BNN
+F 1 "PINHD-1X8" H 8050 4100 59  0000 L BNN
+F 2 "tinytx3:1X08" H 8300 4600 50  0001 C CNN
+F 3 "" H 8300 4600 50  0001 C CNN
+	1    8300 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD1
+U 1 1 ECAC0B96
+P 6400 3600
+F 0 "PAD1" H 6355 3673 59  0000 L BNN
+F 1 "1,6_0,9" H 6355 3470 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 6400 3600 50  0001 C CNN
+F 3 "" H 6400 3600 50  0001 C CNN
+	1    6400 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD2
+U 1 1 217D3D9D
+P 6600 3600
+F 0 "PAD2" H 6555 3673 59  0000 L BNN
+F 1 "1,6_0,9" H 6555 3470 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 6600 3600 50  0001 C CNN
+F 3 "" H 6600 3600 50  0001 C CNN
+	1    6600 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD3
+U 1 1 9194676F
+P 6800 3600
+F 0 "PAD3" H 6755 3673 59  0000 L BNN
+F 1 "1,6_0,9" H 6755 3470 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 6800 3600 50  0001 C CNN
+F 3 "" H 6800 3600 50  0001 C CNN
+	1    6800 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD4
+U 1 1 81CB5BD4
+P 7000 3600
+F 0 "PAD4" H 6955 3673 59  0000 L BNN
+F 1 "1,6_0,9" H 6955 3470 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7000 3600 50  0001 C CNN
+F 3 "" H 7000 3600 50  0001 C CNN
+	1    7000 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD5
+U 1 1 03DA410A
+P 7200 3600
+F 0 "PAD5" H 7155 3673 59  0000 L BNN
+F 1 "1,6_0,9" H 7155 3470 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7200 3600 50  0001 C CNN
+F 3 "" H 7200 3600 50  0001 C CNN
+	1    7200 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD6
+U 1 1 14C5F2AE
+P 7400 3600
+F 0 "PAD6" H 7355 3673 59  0000 L BNN
+F 1 "1,6_0,9" H 7355 3470 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7400 3600 50  0001 C CNN
+F 3 "" H 7400 3600 50  0001 C CNN
+	1    7400 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD7
+U 1 1 F9DA288B
+P 7600 3600
+F 0 "PAD7" H 7555 3673 59  0000 L BNN
+F 1 "1,6_0,9" H 7555 3470 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7600 3600 50  0001 C CNN
+F 3 "" H 7600 3600 50  0001 C CNN
+	1    7600 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD8
+U 1 1 7E28D476
+P 7800 3600
+F 0 "PAD8" H 7755 3673 59  0000 L BNN
+F 1 "1,6_0,9" H 7755 3470 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7800 3600 50  0001 C CNN
+F 3 "" H 7800 3600 50  0001 C CNN
+	1    7800 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD9
+U 1 1 0672B637
+P 6400 3100
+F 0 "PAD9" H 6355 3173 59  0000 L BNN
+F 1 "1,6_0,9" H 6355 2970 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 6400 3100 50  0001 C CNN
+F 3 "" H 6400 3100 50  0001 C CNN
+	1    6400 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD10
+U 1 1 6259CFB0
+P 6600 3100
+F 0 "PAD10" H 6555 3173 59  0000 L BNN
+F 1 "1,6_0,9" H 6555 2970 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 6600 3100 50  0001 C CNN
+F 3 "" H 6600 3100 50  0001 C CNN
+	1    6600 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD11
+U 1 1 24800C63
+P 6800 3100
+F 0 "PAD11" H 6755 3173 59  0000 L BNN
+F 1 "1,6_0,9" H 6755 2970 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 6800 3100 50  0001 C CNN
+F 3 "" H 6800 3100 50  0001 C CNN
+	1    6800 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD12
+U 1 1 80BF2B82
+P 7000 3100
+F 0 "PAD12" H 6955 3173 59  0000 L BNN
+F 1 "1,6_0,9" H 6955 2970 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7000 3100 50  0001 C CNN
+F 3 "" H 7000 3100 50  0001 C CNN
+	1    7000 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD13
+U 1 1 D2422DC5
+P 7200 3100
+F 0 "PAD13" H 7155 3173 59  0000 L BNN
+F 1 "1,6_0,9" H 7155 2970 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7200 3100 50  0001 C CNN
+F 3 "" H 7200 3100 50  0001 C CNN
+	1    7200 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD14
+U 1 1 50C0B4D5
+P 7400 3100
+F 0 "PAD14" H 7355 3173 59  0000 L BNN
+F 1 "1,6_0,9" H 7355 2970 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7400 3100 50  0001 C CNN
+F 3 "" H 7400 3100 50  0001 C CNN
+	1    7400 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD15
+U 1 1 BFC78AF1
+P 7600 3100
+F 0 "PAD15" H 7555 3173 59  0000 L BNN
+F 1 "1,6_0,9" H 7555 2970 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7600 3100 50  0001 C CNN
+F 3 "" H 7600 3100 50  0001 C CNN
+	1    7600 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:1,6_0,9 PAD16
+U 1 1 A0BB8ACB
+P 7800 3100
+F 0 "PAD16" H 7755 3173 59  0000 L BNN
+F 1 "1,6_0,9" H 7755 2970 59  0000 L BNN
+F 2 "tinytx3:1,6_0,9" H 7800 3100 50  0001 C CNN
+F 3 "" H 7800 3100 50  0001 C CNN
+	1    7800 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L tinytx3-eagle-import:2,15_1,0 GND1
+U 1 1 F6502666
+P 3900 2700
+F 0 "GND1" H 3855 2773 59  0000 L BNN
+F 1 "2,15_1,0" H 3855 2570 59  0000 L BNN
+F 2 "tinytx3:2,15_1,0" H 3900 2700 50  0001 C CNN
+F 3 "" H 3900 2700 50  0001 C CNN
+	1    3900 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:2,15_1,0 VCC1
+U 1 1 693508F5
+P 3900 2400
+F 0 "VCC1" H 3855 2473 59  0000 L BNN
+F 1 "2,15_1,0" H 3855 2270 59  0000 L BNN
+F 2 "tinytx3:2,15_1,0" H 3900 2400 50  0001 C CNN
+F 3 "" H 3900 2400 50  0001 C CNN
+	1    3900 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L tinytx3-eagle-import:A5L-LOC #FRAME1
+U 1 1 7D0788B5
+P 2300 6400
+F 0 "#FRAME1" H 2300 6400 50  0001 C CNN
+F 1 "A5L-LOC" H 2300 6400 50  0001 C CNN
+F 2 "" H 2300 6400 50  0001 C CNN
+F 3 "" H 2300 6400 50  0001 C CNN
+	1    2300 6400
+	1    0    0    -1  
+$EndComp
+Text Notes 5800 6200 0    73   ~ 0
+http://nathan.chantrell.net/tinytx
+Text Notes 5800 5700 0    85   ~ 0
+Wireless Sensor Node
+Text Notes 5800 6000 0    59   ~ 0
+Licenced under CC BY-SA 3.0
+Text Notes 5800 5900 0    59   ~ 0
+Open Source Hardware
+$EndSCHEMATC
