@@ -28,7 +28,7 @@ And release all hardware and software in this repository.
 ## Radio module choice
 
 Here is a comparison of [RFM69](https://www.hoperf.com/modules/rf_transceiver/index.html) variants:
-  
+
 Variant|Output (dBm)|Pinout|Size (mm)
 ---|---|---|---
 RFM69[**W**](https://www.hoperf.com/modules/rf_transceiver/RFM69W.html)|13|RFM69W|19.7 x 16
@@ -39,3 +39,7 @@ RFM69[**HCW**](https://www.hoperf.com/modules/rf_transceiver/RFM69HCW.html)|20|R
 i.e. RFM69W and RFM69HW share pinout, but are larger (19.7 x 16)mm vs the RFMCW and RFMHCW (16 x 16)mm.
 
 For interoperability between normal and high-power modules, we'll go with the **RFM69(H)W** modules.
+
+## Hardware versions
+
+* [TinyTX4](hardware/TinyTX4) (monopole and SMA)
