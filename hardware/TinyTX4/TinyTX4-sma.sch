@@ -1,0 +1,416 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L RF_Module:RFM69HW U2
+U 1 1 603D5786
+P 4330 3710
+F 0 "U2" H 4330 4391 50  0000 C CNN
+F 1 "RFM69HW" H 4330 4300 50  0000 C CNN
+F 2 "RF_Module:HOPERF_RFM69HW" H 4330 3110 50  0001 C CNN
+F 3 "https://www.hoperf.com/data/upload/portal/20181127/5bfcbb56f1fd7.pdf" H 4330 3410 50  0001 C CNN
+	1    4330 3710
+	1    0    0    -1  
+$EndComp
+$Comp
+L MCU_Microchip_ATtiny:ATtiny1614-SS U1
+U 1 1 603D5D19
+P 2540 3790
+F 0 "U1" H 2540 4671 50  0000 C CNN
+F 1 "ATtiny1614-SS" H 2540 4580 50  0000 C CNN
+F 2 "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm" H 2540 3790 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny1614-data-sheet-40001995A.pdf" H 2540 3790 50  0001 C CNN
+	1    2540 3790
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3140 3690 3740 3690
+Wire Wire Line
+	3740 3690 3740 3410
+Wire Wire Line
+	3740 3410 3830 3410
+Wire Wire Line
+	3830 3510 3520 3510
+Wire Wire Line
+	3520 3510 3520 3590
+Wire Wire Line
+	3520 3590 3140 3590
+Wire Wire Line
+	3830 3610 3620 3610
+Wire Wire Line
+	3620 3610 3620 3490
+Wire Wire Line
+	3620 3490 3140 3490
+Wire Wire Line
+	3830 3710 3300 3710
+Wire Wire Line
+	3300 3710 3300 3790
+Wire Wire Line
+	3300 3790 3140 3790
+Wire Wire Line
+	3140 3990 4410 3990
+Wire Wire Line
+	4410 3990 4410 3510
+Wire Wire Line
+	4410 3510 4830 3510
+$Comp
+L Connector:Conn_01x03_Male J1
+U 1 1 603D8BFA
+P 3460 2880
+F 0 "J1" V 3522 3024 50  0000 L CNN
+F 1 "Conn_01x03_Male" V 3613 3024 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x03_P3.175mm_Drill1mm" H 3460 2880 50  0001 C CNN
+F 3 "~" H 3460 2880 50  0001 C CNN
+	1    3460 2880
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4430 4210 4430 4490
+Wire Wire Line
+	3560 3080 3560 3390
+Wire Wire Line
+	3560 3390 3140 3390
+$Comp
+L Device:Antenna AE1
+U 1 1 603DBA67
+P 4990 3210
+F 0 "AE1" H 5070 3199 50  0000 L CNN
+F 1 "Antenna" H 5070 3108 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill1mm" H 4990 3210 50  0001 C CNN
+F 3 "~" H 4990 3210 50  0001 C CNN
+	1    4990 3210
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4830 3410 4990 3410
+NoConn ~ 4830 3610
+NoConn ~ 4830 3710
+NoConn ~ 4830 3810
+NoConn ~ 4830 3910
+NoConn ~ 4830 4010
+NoConn ~ 3830 3910
+Wire Wire Line
+	4330 3090 4330 3210
+$Comp
+L Device:C C1
+U 1 1 603FAE50
+P 1320 3640
+F 0 "C1" H 1090 3640 50  0000 L CNN
+F 1 "0.1uF" H 1090 3550 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 1358 3490 50  0001 C CNN
+F 3 "~" H 1320 3640 50  0001 C CNN
+	1    1320 3640
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C2
+U 1 1 603FCA96
+P 5270 3600
+F 0 "C2" H 5385 3646 50  0000 L CNN
+F 1 "0.1uF" H 5385 3555 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 5308 3450 50  0001 C CNN
+F 3 "~" H 5270 3600 50  0001 C CNN
+	1    5270 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4330 3090 5270 3090
+Wire Wire Line
+	5270 3090 5270 3450
+Connection ~ 4330 3090
+Wire Wire Line
+	5270 3750 5270 4490
+Wire Wire Line
+	5270 4490 5180 4490
+Connection ~ 2540 3090
+$Comp
+L Connector:Conn_01x08_Female J2
+U 1 1 603FEC92
+P 1900 4880
+F 0 "J2" V 1730 5570 50  0000 C CNN
+F 1 "Conn_01x08_Female" V 1810 5600 50  0000 C CNN
+F 2 "kicad-custom:SolderWirePadOval_1x08_Drill1mm" H 1900 4880 50  0001 C CNN
+F 3 "~" H 1900 4880 50  0001 C CNN
+	1    1900 4880
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2200 4680 2200 4490
+Wire Wire Line
+	2100 4680 2100 3960
+Wire Wire Line
+	2100 3960 2340 3960
+Wire Wire Line
+	2340 3960 2340 3090
+Connection ~ 2340 3090
+Wire Wire Line
+	2340 3090 2540 3090
+Wire Wire Line
+	2000 4680 2000 4090
+Wire Wire Line
+	2000 4090 3140 4090
+Wire Wire Line
+	1900 4680 1900 3890
+Wire Wire Line
+	1900 3890 3140 3890
+Wire Wire Line
+	1800 4680 1800 3690
+Wire Wire Line
+	1800 3690 1940 3690
+Wire Wire Line
+	1700 4680 1700 3590
+Wire Wire Line
+	1700 3590 1940 3590
+Wire Wire Line
+	1600 4680 1600 3490
+Wire Wire Line
+	1600 3490 1940 3490
+Wire Wire Line
+	1320 3490 1320 3090
+Wire Wire Line
+	1320 3090 1660 3090
+Wire Wire Line
+	1320 3790 1320 4490
+Wire Wire Line
+	1320 4490 2200 4490
+Wire Wire Line
+	1500 4680 1500 3390
+Wire Wire Line
+	1500 3390 1940 3390
+Connection ~ 2200 4490
+Wire Wire Line
+	2200 4490 2540 4490
+Connection ~ 2540 4490
+Connection ~ 4430 4490
+$Comp
+L power:GND #PWR0101
+U 1 1 60427AF1
+P 3340 4490
+F 0 "#PWR0101" H 3340 4240 50  0001 C CNN
+F 1 "GND" H 3345 4317 50  0000 C CNN
+F 2 "" H 3340 4490 50  0001 C CNN
+F 3 "" H 3340 4490 50  0001 C CNN
+	1    3340 4490
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG0102
+U 1 1 6042828A
+P 3340 4490
+F 0 "#FLG0102" H 3340 4565 50  0001 C CNN
+F 1 "PWR_FLAG" H 3340 4663 50  0000 C CNN
+F 2 "" H 3340 4490 50  0001 C CNN
+F 3 "~" H 3340 4490 50  0001 C CNN
+	1    3340 4490
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Battery BT1
+U 1 1 60432650
+P 1900 2760
+F 0 "BT1" H 2008 2806 50  0000 L CNN
+F 1 "Battery" H 2008 2715 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x02_P3.81mm_Drill1mm" V 1900 2820 50  0001 C CNN
+F 3 "~" V 1900 2820 50  0001 C CNN
+	1    1900 2760
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1660 2680 1660 3090
+Connection ~ 1660 3090
+Wire Wire Line
+	1660 3090 2340 3090
+$Comp
+L Device:C C3
+U 1 1 604375DF
+P 640 2820
+F 0 "C3" H 755 2866 50  0000 L CNN
+F 1 "1uF" H 755 2775 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 678 2670 50  0001 C CNN
+F 3 "~" H 640 2820 50  0001 C CNN
+	1    640  2820
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C4
+U 1 1 60437E23
+P 1530 2830
+F 0 "C4" H 1645 2876 50  0000 L CNN
+F 1 "1uF" H 1645 2785 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 1568 2680 50  0001 C CNN
+F 3 "~" H 1530 2830 50  0001 C CNN
+	1    1530 2830
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1530 2680 1660 2680
+Wire Wire Line
+	640  2980 640  2970
+$Comp
+L Regulator_Linear:MCP1703A-3302_SOT23 U3
+U 1 1 60444D6C
+P 1080 2680
+F 0 "U3" H 1080 2922 50  0000 C CNN
+F 1 "MCP1703A-3302_SOT23" H 1080 2831 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 1080 2880 50  0001 C CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20005122B.pdf" H 1080 2630 50  0001 C CNN
+	1    1080 2680
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1900 2560 1850 2560
+Wire Wire Line
+	780  2560 780  2680
+Wire Wire Line
+	640  2670 760  2670
+Wire Wire Line
+	760  2670 760  2680
+Wire Wire Line
+	760  2680 780  2680
+Connection ~ 780  2680
+Wire Wire Line
+	640  2980 1080 2980
+Wire Wire Line
+	1080 2980 1530 2980
+Connection ~ 1080 2980
+Wire Wire Line
+	1530 2680 1380 2680
+Connection ~ 1530 2680
+Wire Wire Line
+	1900 2960 1550 2960
+Wire Wire Line
+	1550 2960 1550 2980
+Wire Wire Line
+	1550 2980 1530 2980
+Connection ~ 1530 2980
+$Comp
+L power:PWR_FLAG #FLG0103
+U 1 1 60465DF6
+P 1850 2560
+F 0 "#FLG0103" H 1850 2635 50  0001 C CNN
+F 1 "PWR_FLAG" H 1850 2733 50  0000 C CNN
+F 2 "" H 1850 2560 50  0001 C CNN
+F 3 "~" H 1850 2560 50  0001 C CNN
+	1    1850 2560
+	1    0    0    -1  
+$EndComp
+Connection ~ 1850 2560
+Wire Wire Line
+	1850 2560 780  2560
+Wire Wire Line
+	1080 2980 1080 4490
+Wire Wire Line
+	1080 4490 1320 4490
+Connection ~ 1320 4490
+$Comp
+L Connector:Conn_01x08_Female J4
+U 1 1 60473A43
+P 1900 5080
+F 0 "J4" V 2090 5470 50  0000 C CNN
+F 1 "Conn_01x08_Female" V 2270 5000 50  0000 C CNN
+F 2 "kicad-custom:SolderWirePad_1x08_Drill1mm" H 1900 5080 50  0001 C CNN
+F 3 "~" H 1900 5080 50  0001 C CNN
+	1    1900 5080
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector:Conn_01x08_Female J3
+U 1 1 60476D5A
+P 1800 5150
+F 0 "J3" V 2090 5970 50  0000 C CNN
+F 1 "Conn_01x08_Female" V 2000 5920 50  0000 C CNN
+F 2 "kicad-custom:SolderWirePad_1x08_Drill1mm" H 1800 5150 50  0001 C CNN
+F 3 "~" H 1800 5150 50  0001 C CNN
+	1    1800 5150
+	0    -1   -1   0   
+$EndComp
+NoConn ~ 1500 5350
+NoConn ~ 1600 5350
+NoConn ~ 1700 5350
+NoConn ~ 1800 5350
+NoConn ~ 1900 5350
+NoConn ~ 2000 5350
+NoConn ~ 2100 5350
+NoConn ~ 2200 5350
+Wire Wire Line
+	1500 4880 1500 4680
+Connection ~ 1500 4680
+Wire Wire Line
+	1600 4880 1600 4680
+Connection ~ 1600 4680
+Wire Wire Line
+	1700 4880 1700 4680
+Connection ~ 1700 4680
+Wire Wire Line
+	1800 4880 1800 4680
+Connection ~ 1800 4680
+Wire Wire Line
+	1900 4880 1900 4680
+Connection ~ 1900 4680
+Wire Wire Line
+	2000 4880 2000 4680
+Connection ~ 2000 4680
+Wire Wire Line
+	2100 4680 2100 4880
+Connection ~ 2100 4680
+Wire Wire Line
+	2200 4880 2200 4680
+Connection ~ 2200 4680
+Wire Wire Line
+	2540 3090 3460 3090
+Wire Wire Line
+	3460 3080 3460 3090
+Connection ~ 3460 3090
+Wire Wire Line
+	3460 3090 4330 3090
+Wire Wire Line
+	3340 4490 3460 4490
+Wire Wire Line
+	2540 4490 3340 4490
+Connection ~ 3340 4490
+Wire Wire Line
+	3360 3080 3360 3250
+Wire Wire Line
+	3360 3250 3460 3250
+Wire Wire Line
+	3460 3250 3460 4490
+Connection ~ 3460 4490
+Wire Wire Line
+	3460 4490 4430 4490
+$Comp
+L Molex_SMA:73391-0060 J5
+U 1 1 6051B40C
+P 5080 4290
+F 0 "J5" H 5042 4604 50  0000 C CNN
+F 1 "73391-0060" H 5042 4513 50  0000 C CNN
+F 2 "MOLEX_73391-0060" H 5080 4290 50  0001 L BNN
+F 3 "" H 5080 4290 50  0001 L BNN
+F 4 "Molex" H 5080 4290 50  0001 L BNN "MANUFACTURER"
+	1    5080 4290
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5180 4190 5180 3640
+Wire Wire Line
+	5180 3640 4990 3640
+Wire Wire Line
+	4990 3640 4990 3410
+Connection ~ 4990 3410
+Wire Wire Line
+	5180 4390 5180 4490
+Connection ~ 5180 4490
+Wire Wire Line
+	5180 4490 4430 4490
+$EndSCHEMATC
