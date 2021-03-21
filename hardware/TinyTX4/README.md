@@ -4,7 +4,7 @@ Upgrades from TinyTX3:
 
 * Updated to RFM69HW/W module
 * Updated to ATtiny1614 SOIC
-* Added optional [MCP1703](https://ww1.microchip.com/downloads/en/DeviceDoc/22049f.pdf) regulator for ~4-16V input range (e.g. 9V battery, Lead Acid cells...)
+* Added optional [MCP1700](https://ww1.microchip.com/downloads/en/DeviceDoc/22049f.pdf)|[MCP1703](https://ww1.microchip.com/downloads/en/DeviceDoc/22049f.pdf) regulator for ~4-6V~ input ultra low dropout or ~4-16V input range (e.g. 9V battery, Lead Acid cells...). These can be bought in 3.3V or 5V out
 * Added programming header with UPDI
 * Labelled RX/TX ports for hardware UART
 * Added ground planes to improved antenna performance
