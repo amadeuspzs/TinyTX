@@ -71,7 +71,7 @@ U 1 1 603D8BFA
 P 3460 2880
 F 0 "J1" V 3522 3024 50  0000 L CNN
 F 1 "Conn_01x03_Male" V 3613 3024 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x03_P3.175mm_Drill1mm" H 3460 2880 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 3460 2880 50  0001 C CNN
 F 3 "~" H 3460 2880 50  0001 C CNN
 	1    3460 2880
 	0    1    1    0   
@@ -82,17 +82,6 @@ Wire Wire Line
 	3560 3080 3560 3390
 Wire Wire Line
 	3560 3390 3140 3390
-$Comp
-L Device:Antenna AE1
-U 1 1 603DBA67
-P 4990 3210
-F 0 "AE1" H 5070 3199 50  0000 L CNN
-F 1 "Antenna" H 5070 3108 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill1mm" H 4990 3210 50  0001 C CNN
-F 3 "~" H 4990 3210 50  0001 C CNN
-	1    4990 3210
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	4830 3410 4990 3410
 NoConn ~ 4830 3610
@@ -222,7 +211,7 @@ U 1 1 60432650
 P 1900 2760
 F 0 "BT1" H 2008 2806 50  0000 L CNN
 F 1 "Battery" H 2008 2715 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x02_P3.81mm_Drill1mm" V 1900 2820 50  0001 C CNN
+F 2 "User_Library:SolderWirePad_1x02_P3.81mm_Drill1mm" V 1900 2820 50  0001 C CNN
 F 3 "~" V 1900 2820 50  0001 C CNN
 	1    1900 2760
 	1    0    0    -1  
@@ -390,12 +379,12 @@ Connection ~ 3460 4490
 Wire Wire Line
 	3460 4490 4430 4490
 $Comp
-L Molex_SMA:73391-0060 J5
+L TinyTX4-sma-rescue:73391-0060-Molex_SMA J5
 U 1 1 6051B40C
 P 5080 4290
 F 0 "J5" H 5042 4604 50  0000 C CNN
 F 1 "73391-0060" H 5042 4513 50  0000 C CNN
-F 2 "MOLEX_73391-0060" H 5080 4290 50  0001 L BNN
+F 2 "User_Library:MOLEX_73391-0060" H 5080 4290 50  0001 L BNN
 F 3 "" H 5080 4290 50  0001 L BNN
 F 4 "Molex" H 5080 4290 50  0001 L BNN "MANUFACTURER"
 	1    5080 4290
@@ -407,7 +396,6 @@ Wire Wire Line
 	5180 3640 4990 3640
 Wire Wire Line
 	4990 3640 4990 3410
-Connection ~ 4990 3410
 Wire Wire Line
 	5180 4390 5180 4490
 Connection ~ 5180 4490

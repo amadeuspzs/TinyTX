@@ -172,10 +172,6 @@ Wire Wire Line
 Wire Wire Line
 	1700 3590 1940 3590
 Wire Wire Line
-	1600 4680 1600 3490
-Wire Wire Line
-	1600 3490 1940 3490
-Wire Wire Line
 	1320 3490 1320 3090
 Wire Wire Line
 	1320 3090 1660 3090
@@ -183,10 +179,6 @@ Wire Wire Line
 	1320 3790 1320 4490
 Wire Wire Line
 	1320 4490 2200 4490
-Wire Wire Line
-	1500 4680 1500 3390
-Wire Wire Line
-	1500 3390 1940 3390
 Connection ~ 2200 4490
 Wire Wire Line
 	2200 4490 2540 4490
@@ -344,10 +336,8 @@ NoConn ~ 2100 5350
 NoConn ~ 2200 5350
 Wire Wire Line
 	1500 4880 1500 4680
-Connection ~ 1500 4680
 Wire Wire Line
 	1600 4880 1600 4680
-Connection ~ 1600 4680
 Wire Wire Line
 	1700 4880 1700 4680
 Connection ~ 1700 4680
@@ -389,4 +379,59 @@ Wire Wire Line
 	3460 4490 4430 4490
 Wire Wire Line
 	4430 4490 5270 4490
+$Comp
+L Device:R R1
+U 1 1 605B5BD2
+P 2550 2650
+F 0 "R1" V 2343 2650 50  0000 C CNN
+F 1 "R" V 2434 2650 50  0000 C CNN
+F 2 "" V 2480 2650 50  0001 C CNN
+F 3 "~" H 2550 2650 50  0001 C CNN
+	1    2550 2650
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 605B6CFB
+P 3000 2650
+F 0 "R2" V 2793 2650 50  0000 C CNN
+F 1 "R" V 2884 2650 50  0000 C CNN
+F 2 "" V 2930 2650 50  0001 C CNN
+F 3 "~" H 3000 2650 50  0001 C CNN
+	1    3000 2650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1900 2560 2400 2560
+Wire Wire Line
+	2400 2560 2400 2650
+Connection ~ 1900 2560
+Wire Wire Line
+	2700 2650 2785 2650
+Wire Wire Line
+	3150 2650 3150 2950
+Wire Wire Line
+	3150 2950 1900 2950
+Wire Wire Line
+	1900 2950 1900 2960
+Connection ~ 1900 2960
+Wire Wire Line
+	2785 2650 2785 2800
+Wire Wire Line
+	2785 2800 2305 2800
+Wire Wire Line
+	2305 2800 2305 2910
+Wire Wire Line
+	2305 2910 1985 2910
+Wire Wire Line
+	1985 2910 1985 3230
+Wire Wire Line
+	1985 3230 1915 3230
+Wire Wire Line
+	1915 3230 1915 3390
+Wire Wire Line
+	1915 3390 1940 3390
+Connection ~ 2785 2650
+Wire Wire Line
+	2785 2650 2850 2650
 $EndSCHEMATC
