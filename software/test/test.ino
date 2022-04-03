@@ -8,7 +8,7 @@
 
 */
 
-#define debug true      // enable Serial output  
+#define debug false      // enable Serial output  
 #include <RFM69.h>      // https://github.com/lowpowerlab/rfm69
 #include <RFM69_ATC.h>  // https://github.com/lowpowerlab/rfm69
 #include <SPI.h>
@@ -18,9 +18,9 @@
 #define GATEWAYID   1   // id of your gateway
 #define FREQUENCY     RF69_433MHZ
 //#define ENCRYPTKEY    "sampleEncryptKey" //has to be same 16 characters/bytes on all nodes, not more not less!
-//#define IS_RFM69HW_HCW  //uncomment only for RFM69HW/HCW! Leave out if you have RFM69W/CW!
-#define ENABLE_ATC    //comment out this line to disable AUTO TRANSMISSION CONTROL
-#define ATC_RSSI      -80 // target RSSI (dBm)
+#define IS_RFM69HW_HCW  //uncomment only for RFM69HW/HCW! Leave out if you have RFM69W/CW!
+// #define ENABLE_ATC    //comment out this line to disable AUTO TRANSMISSION CONTROL
+// #define ATC_RSSI      -80 // target RSSI (dBm)
 #define SERIAL_BAUD 9600
 
 #ifdef ENABLE_ATC
