@@ -93,6 +93,7 @@ void loop() {
   } else { 
     if (debug) Serial.print(" nothing...");
   }
+  radio.sleep(); // send radio to sleep to save power
   delay(TRANSMITPERIOD);
   if (debug) Serial.println();
 }
