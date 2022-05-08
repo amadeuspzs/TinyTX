@@ -17,7 +17,7 @@ Since Nathan created TinyTX, both chips have evolved:
 
 This project will create a TinyTX4 using:
 
-1. RFM69
+1. RFM69HW
 2. ATtiny1614
 3. lowpowerlab's [RFM69](https://github.com/lowpowerlab/rfm69) library
 
@@ -43,3 +43,7 @@ For interoperability between normal and high-power modules, we'll go with the **
 * [TinyTX4](hardware/TinyTX4) (monopole and SMA)
 
 ![TinyTX4 Gif](https://user-images.githubusercontent.com/534681/110469152-3162a280-80d1-11eb-835b-dacc42af85ce.gif)
+
+## Software
+
+See [software](software/) page.
