@@ -2,6 +2,10 @@
 // burn bootloader with brown out detection disabled
 // set clock to 1MHz
 
+// benchmarks June 1 2022, TinyTX4 no connections:
+// 30uA sleep
+// 1.1mA wake
+
 #include <avr/sleep.h>
 #include <util/delay.h>
 #include <RFM69.h>      // https://github.com/lowpowerlab/rfm69
