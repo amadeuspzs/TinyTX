@@ -4,3 +4,4 @@ fp-info-cache
 *.kicad_pcb-bak
 _autosave*
 .ipynb_checkpoints
+build/

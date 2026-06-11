@@ -1,9 +1,0 @@
-{
-  "additionalFiles": "../../..,../../..",
-  "compiler.optimization_flags": "",
-  "customBuildProperties": "",
-  "fqbn": "megaTinyCore:megaavr:atxy4:chip=1614,clock=20internal",
-  "hardwareFolders": "/home/amadeus/.arduino15/packages/megaTinyCore/hardware/megaavr/2.6.11,/home/amadeus/.arduino15/packages/megaTinyCore/hardware/megaavr/2.6.11",
-  "otherLibrariesFolders": "/home/amadeus/Arduino/libraries",
-  "sketchLocation": "/home/amadeus/dev/TinyTX/software/ping"
-}
