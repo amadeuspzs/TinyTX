@@ -1,0 +1,72 @@
+#line 1 "/home/amadeus/dev/TinyTX/software/ping/.vscode/tasks.json"
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Firmware",
+            "type": "shell",
+            "command": "arduino-cli",
+            "args": [
+                "compile",
+                "-b",
+                "megaTinyCore:megaavr:atxy4:chip=1614,clock=20internal",
+                "--build-path",
+                "./build",
+                "."
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Build and Upload",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "arduino-cli compile -b 'megaTinyCore:megaavr:atxy4:chip=1614,clock=20internal' --build-path ./build . && arduino-cli upload -b 'megaTinyCore:megaavr:atxy4:chip=1614,clock=20internal' -p /dev/ttyUPDI -P serialupdi --input-dir ./build"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Upload Firmware",
+            "type": "shell",
+            "command": "arduino-cli",
+            "args": [
+                "upload",
+                "-b",
+                "megaTinyCore:megaavr:atxy4:chip=1614,clock=20internal",
+                "-p",
+                "/dev/ttyUPDI",
+                "-P",
+                "serialupdi",
+                "--input-dir",
+                "./build"
+            ],
+            "dependsOn": [
+                "Build Firmware"
+            ],
+            "group": {
+                "kind": "test"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}

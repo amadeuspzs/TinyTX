@@ -1,6 +1,3 @@
-update=Wednesday, 03 March 2021 at 10:25:35
-version=1
-last_client=kicad
 [general]
 version=1
 RootSch=

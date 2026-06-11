@@ -1,3 +1,5 @@
 (sym_lib_table
-  (lib (name TinyTX4-sma-rescue)(type Legacy)(uri ${KIPRJMOD}/TinyTX4-sma-rescue.lib)(options "")(descr ""))
+	(version 7)
+	(lib (name "TinyTX4-sma-rescue") (type "Legacy") (uri "${KIPRJMOD}/TinyTX4-sma-rescue.lib") (options "") (descr ""))
+	(lib (name "TinyTX4-cache") (type "Legacy") (uri "/run/user/1000/gvfs/smb-share:server=openmediavault.local,share=omv/dev/TinyTX/hardware/TinyTX4/TinyTX4-cache.lib") (options "") (descr "Legacy project cache library"))
 )

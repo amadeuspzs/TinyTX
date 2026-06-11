@@ -1,3 +1,4 @@
+#line 1 "/home/amadeus/dev/TinyTX/software/ping/ping.ino"
 /*
 
   Test sketch to get your TinyTX up and running.
@@ -48,6 +49,11 @@ typedef struct
 } Payload;
 Payload theData;
 
+#line 51 "/home/amadeus/dev/TinyTX/software/ping/ping.ino"
+void setup();
+#line 110 "/home/amadeus/dev/TinyTX/software/ping/ping.ino"
+void loop();
+#line 51 "/home/amadeus/dev/TinyTX/software/ping/ping.ino"
 void setup()
 {
   delay(2000);
@@ -152,3 +158,4 @@ void loop()
   if (debug)
     Serial.println();
 }
+
