@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "ATtiny1614",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "configurationProvider": "ms-vscode.cpptools"
+        }
+    ],
+    "version": 4
+}
