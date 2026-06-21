@@ -1,10 +1,13 @@
 /*
   SEN0300 Integration
-  
+
   Reads distance and temperature from DFRobot SEN0300 Waterproof Ultrasonic Sensor
   and transmits data via RFM69.
 
   Wiring Connections:
+  TinyTX Header L-R:
+  7 6 5 4 1 3 3V3 GND
+
   ------------------------------------
   Sensor Pin   | TinyTX Pin (Arduino Pin)
   ------------------------------------
@@ -14,138 +17,206 @@
   TX (Data)    | Pin 3 (PA7)
   ------------------------------------
 
-  Pin 5 (PB2) is used for Hardware Serial TX (Debug Output).
-  Pin 6 (PB1) is configured as the dummy SoftwareSerial TX pin.
+  Pin 4 (PB3) is the MOSFET gate to power the sensor on/off (active LOW).
+  Pin 5 (PB2) is Hardware Serial TX — debug output when DEBUG is defined in config.h.
+  Pin 6 (PB1) is the dummy SoftwareSerial TX (sensor serial never transmits).
 
-  Frequency is set exactly to 433.0MHz for compatibility.
+  Sleep:
+    RTC PIT wakes the MCU every ~1 s; TARGET_SLEEPS ticks pass before the
+    next measurement, giving a variable transmit interval without busy-delay.
 */
 
+#include <avr/sleep.h>
 #include <SoftwareSerial.h>
 #include <SPI.h>
 #include "config.h"
+#include <math.h>
 
-// Instantiate the radio object
+// ---------------------------------------------------------------------------
+// Radio
+// ---------------------------------------------------------------------------
 #ifdef ENABLE_ATC
 RFM69_ATC radio;
 #else
 RFM69 radio;
 #endif
 
-// SoftwareSerial instance for reading from the sensor (TX pin is dummy and left unconnected)
+// ---------------------------------------------------------------------------
+// SoftwareSerial for sensor receive (TX pin is dummy, never driven)
+// ---------------------------------------------------------------------------
 SoftwareSerial sensorSerial(RX_PIN, DUMMY_TX_PIN);
 
+// ---------------------------------------------------------------------------
+// Radio retries
+// ---------------------------------------------------------------------------
 int numRetries = 3;
-int timeout = 50;
+int timeout = 50;      // ms to wait for ACK
+bool heartbeat = true; // binary heartbeat every sleep cycle
 
+// ---------------------------------------------------------------------------
+// Payload
+// ---------------------------------------------------------------------------
 Payload theData;
 
-// Function declarations
+// ---------------------------------------------------------------------------
+// Sleep / RTC state
+// ---------------------------------------------------------------------------
+volatile int current_sleeps = 0; // incremented by the PIT ISR
+
+// ---------------------------------------------------------------------------
+// RTC / PIT initialisation
+// One PIT interrupt every ~1 s (CYC1024 @ 1.024 kHz internal oscillator)
+// ---------------------------------------------------------------------------
+void RTC_init(void)
+{
+  RTC.CLKSEL = RTC_CLKSEL_INT1K_gc; // 1.024 kHz ULP oscillator
+  while (RTC.STATUS > 0 || RTC.PITSTATUS)
+    ;                                  // wait for sync
+  RTC.PITINTCTRL = RTC_PI_bm;          // enable PIT interrupt
+  RTC.PITCTRLA = RTC_PERIOD_CYC1024_gc // ~1 s per tick
+                 | RTC_PITEN_bm;       // enable PIT
+}
+
+ISR(RTC_PIT_vect)
+{
+  current_sleeps++;
+  RTC.PITINTFLAGS = RTC_PI_bm; // clear flag (write 1 to clear)
+}
+
+// ---------------------------------------------------------------------------
+// Forward declarations
+// ---------------------------------------------------------------------------
 bool readSensorData(float &distance_cm, float &temperature_c);
 
+// ---------------------------------------------------------------------------
+// setup()
+// ---------------------------------------------------------------------------
 void setup()
 {
-  // 1. Lock the pin HIGH immediately to prevent Switch Mode
+  // Pull unused pins high to minimise leakage current
+  pinMode(PIN_PB0, INPUT_PULLUP);
+
+  // 1. Hold TRIG_PIN HIGH immediately to prevent sensor entering Switch Mode
   pinMode(TRIG_PIN, OUTPUT);
   digitalWrite(TRIG_PIN, HIGH);
 
-  // Define the power pin
+  // 2. Power off the sensor via MOSFET (active LOW gate logic)
   pinMode(POWER_PIN, OUTPUT);
-  // for now, just switch on (reverse logic)
-  digitalWrite(POWER_PIN, LOW);
-  delay(2000);
-  
-  // Initialize hardware Serial (defaults to PB2 on ATtiny1614)
-  Serial.begin(SERIAL_BAUD);
-  delay(100);
-  Serial.println("\n\n=== TinyTX SEN0300 Starting ===");
+  digitalWrite(POWER_PIN, HIGH); // power off sensor
 
-  // Initialize SoftwareSerial for the sensor
+  // 3. Debug serial (hardware Serial on PB2)
+  DBG_BEGIN(SERIAL_BAUD);
+  delay(100);
+  DBG_PRINTLN("\n\n=== TinyTX SEN0300 Starting ===");
+
+  // 4. Sensor serial (SoftwareSerial on PA7)
   sensorSerial.begin(9600);
 
-  // Initialize the radio
+  // 5. Radio
   radio.initialize(FREQUENCY, NODEID, NETWORKID);
-  
-  // Set frequency to exactly 433.0MHz
-  radio.setFrequency(433000000);
+  radio.setFrequency(433000000); // lock to exactly 433.0 MHz
 
 #ifdef IS_RFM69HW_HCW
-  radio.setHighPower(); // Must include for RFM69HW/HCW
+  radio.setHighPower();
 #endif
-
 #ifdef ENABLE_ATC
   radio.enableAutoPower(ATC_RSSI);
 #endif
 
-  // Verify radio configuration by reading the frequency register
+#ifdef DEBUG
+  // 6. Verify radio frequency via register readback
   uint32_t frf = ((uint32_t)radio.readReg(0x07) << 16) |
                  ((uint32_t)radio.readReg(0x08) << 8) |
                  radio.readReg(0x09);
-  float freq_mhz = (frf * 61.03515625) / 1000000.0;
-  Serial.print("Radio actual frequency: ");
-  Serial.print(freq_mhz, 2);
-  Serial.println(" MHz");
-  
-  Serial.println("Setup completed successfully. Starting measurement loop...\n");
+  float freq_mhz = (frf * 61.03515625f) / 1000000.0f;
+#endif
+  DBG_PRINT("Radio frequency: ");
+  DBG_PRINT2(freq_mhz, 2);
+  DBG_PRINTLN(" MHz");
+
+  DBG_PRINTLN("Setup complete. Starting loop...\n");
+
+  // 7. RTC PIT sleep setup
+  RTC_init();
+  set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+  sleep_enable();
+  sei();
 }
 
+// ---------------------------------------------------------------------------
+// loop()
+// ---------------------------------------------------------------------------
 void loop()
 {
-  Serial.println("--- Triggering Sensor Measurement ---");
-  
-  float dist = 0.0;
-  float temp = 0.0;
-
-  if (readSensorData(dist, temp))
+  // Fire on first wake (current_sleeps == 0) or once TARGET_SLEEPS ticks have passed
+  if (current_sleeps == 0 || current_sleeps >= TARGET_SLEEPS)
   {
-    theData.distance_cm = dist;
-    theData.temperature_c = temp;
+    DBG_PRINTLN("--- Triggering Sensor Measurement ---");
+    digitalWrite(POWER_PIN, LOW); // power on sensor
+    delay(100);                   // wait for sensor to power up and stabilise
+    float dist = 0.0f;
+    float temp = 0.0f;
 
-    Serial.print("Parsed values: Distance = ");
-    Serial.print(theData.distance_cm, 1);
-    Serial.print(" cm, Temperature = ");
-    Serial.print(theData.temperature_c, 1);
-    Serial.println(" C");
+    theData.heartbeat = heartbeat;
 
-    Serial.print("Sending payload (");
-    Serial.print(sizeof(theData));
-    Serial.print(" bytes) via RFM69... ");
-
-    if (radio.sendWithRetry(GATEWAYID, (const void *)(&theData), sizeof(theData), numRetries, timeout))
+    if (readSensorData(dist, temp))
     {
-      Serial.println("ACK received!");
+      theData.distance_cm = dist;
+      theData.temperature_c = temp;
+
+      DBG_PRINT("Distance = ");
+      DBG_PRINT2(theData.distance_cm, 1);
+      DBG_PRINT(" cm, Temperature = ");
+      DBG_PRINT2(theData.temperature_c, 1);
+      DBG_PRINTLN(" C");
     }
     else
     {
-      Serial.println("no response.");
+      DBG_PRINTLN("Failed to read sensor data.");
+      theData.distance_cm = NAN; // indicate invalid reading
+      theData.temperature_c = NAN;
     }
-  }
-  else
-  {
-    Serial.println("Failed to read sensor data.");
+
+    DBG_PRINT("Sending via RFM69... ");
+
+    if (radio.sendWithRetry(GATEWAYID, (const void *)(&theData), sizeof(theData), numRetries, timeout))
+    {
+      DBG_PRINTLN("ACK received!");
+    }
+    else
+    {
+      DBG_PRINTLN("no response.");
+    }
+    current_sleeps = 0; // reset sleep counter
+
+    DBG_PRINT("Sleeping for ~");
+    DBG_PRINT(TARGET_SLEEPS);
+    DBG_PRINTLN(" seconds...\n");
+#ifdef DEBUG
+    Serial.flush();
+#endif
   }
 
-  radio.sleep(); // Put radio to sleep to save power
-  
-  Serial.print("Sleeping for ");
-  Serial.print(TRANSMITPERIOD / 1000);
-  Serial.println(" seconds...\n");
-  
-  delay(TRANSMITPERIOD);
+  heartbeat = !heartbeat;        // toggle heartbeat for next sleep cycle
+  digitalWrite(POWER_PIN, HIGH); // power off sensor before sleeping
+  radio.sleep();                 // put radio to sleep before CPU sleeps
+  sleep_cpu();                   // sleep until next PIT interrupt (~1 s), then loop() reruns
 }
 
-// Read and parse data from the SEN0300 sensor
+// ---------------------------------------------------------------------------
+// readSensorData()
+// Triggers the SEN0300, reads and validates the 6-byte frame, returns
+// distance (cm) and temperature (°C).
+// ---------------------------------------------------------------------------
 bool readSensorData(float &distance_cm, float &temperature_c)
 {
-  // Flush input buffer to clear stale serial data
+  // Flush stale bytes
   while (sensorSerial.available())
-  {
     sensorSerial.read();
-  }
 
-  // Trigger the measurement with a LOW pulse
+  // Active-LOW trigger pulse (10 ms, within the 0.1–10 ms spec)
   digitalWrite(TRIG_PIN, LOW);
-  delay(10); // try 10ms as per datasheet
-  //delayMicroseconds(500); // 0.5ms is well within the 0.1-10ms spec
+  delay(10);
   digitalWrite(TRIG_PIN, HIGH);
 
   unsigned char buffer_RTT[6] = {0};
@@ -154,7 +225,7 @@ bool readSensorData(float &distance_cm, float &temperature_c)
   bool foundHeader = false;
 
   // 1. Align on header byte 0xFF
-  while (millis() - startTime < 300) // 300ms timeout
+  while (millis() - startTime < 300)
   {
     if (sensorSerial.available() > 0)
     {
@@ -170,65 +241,63 @@ bool readSensorData(float &distance_cm, float &temperature_c)
 
   if (!foundHeader)
   {
-    Serial.println("  [Error] Timeout: Header byte (0xFF) not found.");
+    DBG_PRINTLN("  [Error] Timeout: Header byte (0xFF) not found.");
     return false;
   }
 
-  // 2. Read the remaining 5 bytes of the frame
+  // 2. Read remaining 5 bytes
   bytesRead = 1;
   while (bytesRead < 6 && (millis() - startTime < 500))
   {
     if (sensorSerial.available() > 0)
-    {
       buffer_RTT[bytesRead++] = sensorSerial.read();
-    }
   }
 
   if (bytesRead < 6)
   {
-    Serial.print("  [Error] Timeout: Incomplete frame (received ");
-    Serial.print(bytesRead);
-    Serial.println(" of 6 bytes).");
+    DBG_PRINT("  [Error] Incomplete frame (");
+    DBG_PRINT(bytesRead);
+    DBG_PRINTLN("/6 bytes).");
     return false;
   }
 
-  // Print raw hex buffer for debugging
-  Serial.print("  [Raw RX] ");
+  // 3. Print raw frame for debugging
+  DBG_PRINT("  [Raw RX] ");
   for (int i = 0; i < 6; i++)
   {
-    Serial.print("0x");
-    if (buffer_RTT[i] < 0x10) Serial.print("0");
-    Serial.print(buffer_RTT[i], HEX);
-    Serial.print(" ");
+    DBG_PRINT("0x");
+    if (buffer_RTT[i] < 0x10)
+      DBG_PRINT("0");
+    DBG_PRINT2(buffer_RTT[i], HEX);
+    DBG_PRINT(" ");
   }
-  Serial.println();
+  DBG_PRINTLN("");
 
-  // 3. Verify checksum
-  // SUM = (Header + DATA_H + DATA_L + Temp_H + Temp_L) & 0xFF
-  byte expectedChecksum = (buffer_RTT[0] + buffer_RTT[1] + buffer_RTT[2] + buffer_RTT[3] + buffer_RTT[4]) & 0xFF;
-  if (buffer_RTT[5] != expectedChecksum)
+  // 4. Verify checksum: SUM = (byte0..4) & 0xFF
+  byte expected = (buffer_RTT[0] + buffer_RTT[1] + buffer_RTT[2] +
+                   buffer_RTT[3] + buffer_RTT[4]) &
+                  0xFF;
+  if (buffer_RTT[5] != expected)
   {
-    Serial.print("  [Error] Checksum mismatch. Expected: 0x");
-    Serial.print(expectedChecksum, HEX);
-    Serial.print(", Got: 0x");
-    Serial.println(buffer_RTT[5], HEX);
+    DBG_PRINT("  [Error] Checksum mismatch. Expected 0x");
+    DBG_PRINT2(expected, HEX);
+    DBG_PRINT(", got 0x");
+    DBG_PRINT2(buffer_RTT[5], HEX);
+    DBG_PRINTLN("");
     return false;
   }
 
-  // 4. Parse distance (bytes 1 and 2)
+  // 5. Parse distance (bytes 1–2, in mm)
   int range_mm = (buffer_RTT[1] << 8) | buffer_RTT[2];
 
-  // 5. Parse temperature (bytes 3 and 4)
-  // Byte 3 MSB is the sign bit (1 = negative, 0 = positive)
-  bool isNegative = (buffer_RTT[3] & 0x80) == 0x80;
+  // 6. Parse temperature (bytes 3–4; MSB of byte 3 = sign bit)
+  bool isNegative = (buffer_RTT[3] & 0x80) != 0;
   int tempVal = ((buffer_RTT[3] & 0x7F) << 8) | buffer_RTT[4];
-  float temp = tempVal / 10.0;
+  float temp = tempVal / 10.0f;
   if (isNegative)
-  {
     temp = -temp;
-  }
 
-  distance_cm = range_mm / 10.0;
+  distance_cm = range_mm / 10.0f;
   temperature_c = temp;
 
   return true;
