@@ -39,10 +39,11 @@
 // ---------------------------------------------------------------------------
 // Pin Configuration
 // ---------------------------------------------------------------------------
-#define TRIG_PIN PIN_PA5     // Pin 1 (PA5) trigger sensor measurement (active low pulse)
-#define RX_PIN PIN_PA7       // Pin 3 (PA7) SoftwareSerial RX from sensor
-#define DUMMY_TX_PIN PIN_PB1 // Pin 6 (PB1) unused/dummy SoftwareSerial TX
-#define POWER_PIN PIN_PB3    // Pin 4 (PB3) MOSFET gate to power sensor on/off
+#define TRIG_PIN PIN_PA5           // Pin 1 (PA5) trigger sensor measurement (active low pulse)
+#define RX_PIN PIN_PA7             // Pin 3 (PA7) SoftwareSerial RX from sensor
+#define DUMMY_TX_PIN PIN_PB1       // Pin 6 (PB1) unused/dummy SoftwareSerial TX
+#define POWER_PIN PIN_PB3          // Pin 4 (PB3) MOSFET gate to power sensor on/off
+#define BATTERY_SENSOR_PIN PIN_PB0 // Pin 7 (PB0) ADC input for battery voltage measurement
 // Note: PB2 is Hardware Serial TX (debug output when DEBUG is defined)
 
 // ---------------------------------------------------------------------------
@@ -70,6 +71,7 @@ typedef struct
 {
   float distance_cm;
   float temperature_c;
+  float adcRatio;
   bool heartbeat;
 } Payload;
 

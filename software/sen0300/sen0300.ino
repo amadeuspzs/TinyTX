@@ -20,6 +20,7 @@
   Pin 4 (PB3) is the MOSFET gate to power the sensor on/off (active LOW).
   Pin 5 (PB2) is Hardware Serial TX — debug output when DEBUG is defined in config.h.
   Pin 6 (PB1) is the dummy SoftwareSerial TX (sensor serial never transmits).
+  Pin 7 (PB0) is used for voltage divider battery voltage sensor input (ADC).
 
   Sleep:
     RTC PIT wakes the MCU every ~1 s; TARGET_SLEEPS ticks pass before the
@@ -74,7 +75,8 @@ void RTC_init(void)
     ;                                  // wait for sync
   RTC.PITINTCTRL = RTC_PI_bm;          // enable PIT interrupt
   RTC.PITCTRLA = RTC_PERIOD_CYC1024_gc // ~1 s per tick
-                 | RTC_PITEN_bm;       // enable PIT
+                 | RTC_PITEN_bm;
+  // enable PIT
 }
 
 ISR(RTC_PIT_vect)
@@ -93,26 +95,32 @@ bool readSensorData(float &distance_cm, float &temperature_c);
 // ---------------------------------------------------------------------------
 void setup()
 {
-  // Pull unused pins high to minimise leakage current
-  pinMode(PIN_PB0, INPUT_PULLUP);
 
   // 1. Hold TRIG_PIN HIGH immediately to prevent sensor entering Switch Mode
   pinMode(TRIG_PIN, OUTPUT);
   digitalWrite(TRIG_PIN, HIGH);
 
-  // 2. Power off the sensor via MOSFET (active LOW gate logic)
-  pinMode(POWER_PIN, OUTPUT);
-  digitalWrite(POWER_PIN, HIGH); // power off sensor
+  // 2. Battery voltage sensor pin
+  analogReference(VDD); // 3V3
+  pinMode(BATTERY_SENSOR_PIN, INPUT);
 
   // 3. Debug serial (hardware Serial on PB2)
   DBG_BEGIN(SERIAL_BAUD);
+#ifdef DEBUG
+  // Disable the hardware UART receiver to release PB3 back to normal GPIO
+  USART0.CTRLB &= ~USART_RXEN_bm;
+#endif
   delay(100);
   DBG_PRINTLN("\n\n=== TinyTX SEN0300 Starting ===");
 
-  // 4. Sensor serial (SoftwareSerial on PA7)
+  // 4. Power off the sensor via MOSFET (active LOW gate logic)
+  pinMode(POWER_PIN, OUTPUT);
+  digitalWrite(POWER_PIN, LOW); // power off sensor
+
+  // 5. Sensor serial (SoftwareSerial on PA7)
   sensorSerial.begin(9600);
 
-  // 5. Radio
+  // 6. Radio
   radio.initialize(FREQUENCY, NODEID, NETWORKID);
   radio.setFrequency(433000000); // lock to exactly 433.0 MHz
 
@@ -151,9 +159,16 @@ void loop()
   // Fire on first wake (current_sleeps == 0) or once TARGET_SLEEPS ticks have passed
   if (current_sleeps == 0 || current_sleeps >= TARGET_SLEEPS)
   {
+    DBG_PRINT("Heartbeat = ");
+    DBG_PRINTLN(heartbeat);
+    DBG_PRINTLN("--- Measuring Battery ADC ratio ---");
+    float adcRatio = readBatteryRatio();
+    theData.adcRatio = adcRatio;
+    DBG_PRINT("Battery ADC ratio = ");
+    DBG_PRINTLN(adcRatio);
     DBG_PRINTLN("--- Triggering Sensor Measurement ---");
-    digitalWrite(POWER_PIN, LOW); // power on sensor
-    delay(100);                   // wait for sensor to power up and stabilise
+    // digitalWrite(POWER_PIN, LOW); // power on sensor
+    delay(100); // wait for sensor to power up and stabilise
     float dist = 0.0f;
     float temp = 0.0f;
 
@@ -195,12 +210,30 @@ void loop()
 #ifdef DEBUG
     Serial.flush();
 #endif
+    heartbeat = !heartbeat; // toggle heartbeat for next sleep cycle
+    // digitalWrite(POWER_PIN, HIGH); // power off sensor before sleeping
+  } // end wake up logic
+
+  radio.sleep(); // put radio to sleep before CPU sleeps
+  sleep_cpu();   // sleep until next PIT interrupt (~1 s), then loop() reruns
+}
+
+float readBatteryRatio()
+{
+  // Discard the first reading
+  analogRead(BATTERY_SENSOR_PIN);
+
+  uint32_t adcAccumulator = 0;
+  const int samples = 4;
+
+  for (int i = 0; i < samples; i++)
+  {
+    adcAccumulator += analogRead(BATTERY_SENSOR_PIN);
   }
 
-  heartbeat = !heartbeat;        // toggle heartbeat for next sleep cycle
-  digitalWrite(POWER_PIN, HIGH); // power off sensor before sleeping
-  radio.sleep();                 // put radio to sleep before CPU sleeps
-  sleep_cpu();                   // sleep until next PIT interrupt (~1 s), then loop() reruns
+  float adcAverage = (float)adcAccumulator / samples;
+
+  return adcAverage / 1023.0;
 }
 
 // ---------------------------------------------------------------------------
